@@ -1,3 +1,31 @@
+#SCRIPT CREATED TO REFLECT STEPS FROM THIS GUIDE: https://techzone.vmware.com/quick-start-tutorial-vmware-horizon-cloud-service-microsoft-azure
+#FOR MANUAL STEPS REFERENCE USE SHANE FOWLER VIDEO: https://www.youtube.com/watch?v=qIWum9JtLHk&t=2019s
+#IN SCRIPT WORKING DIRECTORY A FILE WILL BE CREATED NAMED .\AzureIDs-For-HZCloud.txt THAT CONTAINS NECESSARY IDS TO CONFIGURE AZURE CAPACITY IN HORIZON CLOUD
+#STILL YOU NEED TO MANUALLY INCREASE QUOTA LIMITS FOR YOUR SUBSCRIPTION IN AZURE PORTAL - THERE IS NO PROGRAMATIC WAY TO DO IT
+
+#SCRIPT REQUIRES INSTALLED AND IMPORTED MODULES AZ, AZUREAD, AZURERM - LOGIN TO EACH MODULE WITH YOUR ADMIN ACCOUNT
+#IGNORE WARNING 
+#TESTED ON POWERSHELL 5.1 ON WINDOWS 10 1903
+
+#Variables descriptions to be created. CHANGE indicated you need to adjust to your environment specifics. Rest can be left with current values.
+# Sub1 - display name of your Azure Subcription CHANGE
+#RG1 - display name of a Resource Group that will be created for Horizon Cloud resources
+#Location1 - Azure region name where resources should be created CHANGE
+#VMNetName1 - display name of the network that will be used for Horizon desktops and rdsh hosts
+#VMNetName - display name of the network that will be used for infrastructure VMs (UAG, MGMT) abd to which a A2S tunnel will be connected.
+#VSubNetName1 name of the subnet /24 used for Horizon desktops  
+#VSubNetName1 subnet name /24 used for infrastructure UAG MGMT
+#GWSubName1 subnet name /24 used for A2S VPN
+# *Prefix CIDR network addresses for the above subnets CHANGE
+#GWName1 Virtual Network Gateway name to be created
+#DNS1 your local AD DNS server address at the DC/LAB CHANGECHANGE
+#GWIPName1 name of the public IP object in Azure 
+#GWIPConfName1 - name of the gateway config
+#ConnectionName - A2S VPN Connection Name
+#LNGName Local Network Gateway display name in Azure
+#LNGPrefix1 and LNGPrefix2 - netowrks in your datacenter/lab
+#LNGIP - your VPN Gateway public IP 
+
 # Declare your variables
 
 $Sub1           = "Azure Subscription 1"
@@ -27,7 +55,6 @@ $LNGIP         = "83.144.96.2"
 
 # Connect to your subscription and create a new resource group
 
-Connect-AzAccount
 $azsubscription = Select-AzSubscription -SubscriptionName $Sub1
 New-AzResourceGroup -Name $RG1 -Location $Location1
 
